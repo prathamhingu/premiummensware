@@ -1,0 +1,44 @@
+<!doctype html>
+<html lang="en">
+<head>
+  <meta charset="utf-8">
+  <meta name="viewport" content="width=device-width, initial-scale=1">
+  <meta name="robots" content="noindex,nofollow,noarchive">
+  <meta name="referrer" content="no-referrer">
+  <title><%= pageTitle || 'Private Website Preview' %></title>
+  <style>
+    :root{color-scheme:light;--forest:#16392f;--forest-deep:#102b24;--ivory:#f6f2e9;--paper:#fffdf8;--gold:#b6975a;--ink:#242821;--muted:#706f66;--line:#e5ded0;--danger:#842c25}
+    *{box-sizing:border-box}html{min-height:100%;background:var(--ivory)}body{margin:0;min-height:100vh;display:grid;place-items:center;padding:24px;color:var(--ink);font-family:Inter,ui-sans-serif,system-ui,-apple-system,"Segoe UI",sans-serif;background:radial-gradient(ellipse at 10% 5%,rgba(182,151,90,.12),transparent 35%),var(--ivory)}
+    .shell{width:min(100%,520px);background:var(--paper);border:1px solid rgba(22,57,47,.13);box-shadow:0 26px 80px rgba(27,36,29,.11);padding:clamp(28px,7vw,56px);position:relative;overflow:hidden}.shell:before{content:"";height:4px;position:absolute;inset:0 0 auto;background:linear-gradient(90deg,var(--forest),var(--gold),var(--forest))}
+    .brand{display:flex;align-items:center;gap:13px;margin-bottom:38px}.brand-mark{width:42px;height:42px;border:1px solid var(--gold);color:var(--forest);display:grid;place-items:center;font-family:Georgia,serif;font-size:22px}.brand-label{font-size:10px;letter-spacing:.2em;text-transform:uppercase;color:var(--muted);line-height:1.6}.brand-label strong{display:block;color:var(--forest);font-size:12px;letter-spacing:.16em;font-weight:700}
+    .eyebrow{font-size:10px;letter-spacing:.22em;text-transform:uppercase;color:#947743;margin:0 0 13px}h1{font-family:Georgia,"Times New Roman",serif;font-weight:400;font-size:clamp(32px,7vw,46px);line-height:1.08;letter-spacing:-.035em;margin:0 0 18px;color:var(--forest)}.intro{font-size:15px;line-height:1.8;color:#5f6259;margin:0 0 30px}.field-label{display:block;font-size:12px;font-weight:650;letter-spacing:.04em;margin-bottom:9px}.password-wrap{display:flex;border:1px solid #d9d1c2;background:white;transition:border-color .18s,box-shadow .18s}.password-wrap:focus-within{outline:2px solid rgba(182,151,90,.25);border-color:var(--gold)}input[type=password],input[type=text]{flex:1;min-width:0;border:0;background:transparent;padding:15px 14px;font:inherit;font-size:15px;outline:none;color:var(--ink)}.toggle{border:0;background:transparent;color:var(--forest);font-size:12px;font-weight:700;padding:0 15px;cursor:pointer}.submit{width:100%;margin-top:16px;background:var(--forest);color:#fff;border:1px solid var(--forest);padding:15px 18px;font:inherit;font-size:12px;font-weight:750;letter-spacing:.13em;text-transform:uppercase;cursor:pointer;transition:background .18s,border-color .18s,transform .18s}.submit:hover{background:var(--forest-deep);border-color:var(--forest-deep)}.submit:focus-visible,.toggle:focus-visible{outline:3px solid var(--gold);outline-offset:3px}.submit:disabled{opacity:.75;cursor:wait}.error{border-left:3px solid var(--danger);background:#fbefeb;color:var(--danger);padding:11px 13px;margin:0 0 18px;font-size:13px;line-height:1.5}.foot{border-top:1px solid var(--line);padding-top:20px;margin-top:30px;color:var(--muted);font-size:11px;line-height:1.7}.foot span{color:var(--gold)}
+    @media(max-width:420px){body{padding:14px}.shell{padding:28px 22px}.brand{margin-bottom:30px}.intro{font-size:14px}}
+    @media(prefers-reduced-motion:reduce){*,*::before,*::after{transition:none!important;scroll-behavior:auto!important}}
+  </style>
+</head>
+<body>
+  <main class="shell" aria-labelledby="preview-heading">
+    <div class="brand" aria-label="Private website preview">
+      <div class="brand-mark" aria-hidden="true">M</div>
+      <div class="brand-label"><strong>Premium Menswear</strong>Private Preview</div>
+    </div>
+    <p class="eyebrow">Invitation only</p>
+    <h1 id="preview-heading">A closer look at our world of menswear.</h1>
+    <p class="intro">This is a private preview of our website. Enter the access password to explore our collections, suiting, tailoring services, gallery, and store information.</p>
+    <% if (errorMessage) { %><p class="error" role="alert"><%= errorMessage %></p><% } %>
+    <form id="preview-form" method="post" action="/_preview/login" autocomplete="on">
+      <input type="hidden" name="_csrf" value="<%= csrfToken %>">
+      <input type="hidden" name="returnTo" value="<%= returnTo || '/' %>">
+      <label class="field-label" for="preview-password">Preview password</label>
+      <div class="password-wrap">
+        <input id="preview-password" name="password" type="password" autocomplete="current-password" minlength="1" maxlength="1024" required autofocus aria-describedby="preview-help">
+        <button id="toggle-password" class="toggle" type="button" aria-controls="preview-password" aria-pressed="false">Show</button>
+      </div>
+      <button id="preview-submit" class="submit" type="submit">Enter Website</button>
+      <span id="preview-help" hidden>Enter the password shared with you by the website owner.</span>
+    </form>
+    <div class="foot">This preview is intended for invited visitors. <span>◆</span> Please keep the access details private.</div>
+  </main>
+  <script src="/_preview/gate.js" defer></script>
+</body>
+</html>

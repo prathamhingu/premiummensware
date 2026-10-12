@@ -1,0 +1,23 @@
+services:
+  - type: web
+    name: premium-menswear-private-preview
+    runtime: node
+    plan: free
+    region: singapore
+    buildCommand: npm --prefix backend ci
+    startCommand: npm --prefix backend start
+    healthCheckPath: /healthz
+    autoDeploy: true
+    envVars:
+      - key: NODE_ENV
+        value: production
+      - key: PREVIEW_GATE_ENABLED
+        value: "true"
+      - key: SESSION_SECRET
+        generateValue: true
+      - key: PREVIEW_PASSWORD_HASH
+        sync: false
+      - key: INITIAL_ADMIN_USERNAME
+        sync: false
+      - key: INITIAL_ADMIN_BCRYPT_HASH
+        sync: false

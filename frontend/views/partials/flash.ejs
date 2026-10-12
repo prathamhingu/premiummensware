@@ -1,0 +1,3 @@
+<% if (flash) { %>
+  <div class="container"><div class="flash-message flash-<%= flash.kind === 'error' ? 'error' : 'success' %>" role="status"><%= flash.message %></div></div>
+<% } %>

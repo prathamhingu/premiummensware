@@ -1,0 +1,34 @@
+<%- include('partials/head') %>
+<%- include('partials/nav', { activePage }) %>
+<main>
+  <section class="page-hero page-hero-dark"><div class="container page-hero__inner"><p class="eyebrow eyebrow-gold"><span class="eyebrow-line"></span> CONTACT & VISIT</p><h1>Let's talk fabric,<br><em>fit, and the details.</em></h1><p>Visit the store to explore current collections, discuss tailoring, and find the right next step for your garment.</p><div class="breadcrumbs breadcrumbs-light"><a href="/">Home</a><span>/</span><span>Visit Us</span></div></div><div class="page-hero__shape" aria-hidden="true">M.</div></section>
+  <%- include('partials/store-visit-strip') %>
+  <section class="section"><div class="container contact-layout" id="contact-details">
+    <div class="contact-details"><p class="eyebrow"><span class="eyebrow-line"></span> COME BY THE STORE</p><h2>Better decisions<br><em>start in person.</em></h2><p class="contact-lede">Feel the fabrics, compare options, and discuss what you have in mind. Use the details below to plan your visit.</p>
+      <div class="contact-detail-list">
+        <div class="contact-detail"><span class="contact-detail__icon">⌖</span><div><small>STORE ADDRESS</small><p><%= settings.address || 'Store address will be added soon.' %></p><% if (directionsUrl(settings)) { %><a href="<%= directionsUrl(settings) %>" target="_blank" rel="noopener noreferrer" class="text-link">Get Directions <span aria-hidden="true">↗</span></a><% } %></div></div>
+        <div class="contact-detail"><span class="contact-detail__icon">◷</span><div><small>OPENING HOURS</small><p><%= settings.openingHours || 'Please contact the store to confirm opening hours.' %></p></div></div>
+        <% if (settings.phone) { %><div class="contact-detail"><span class="contact-detail__icon">↗</span><div><small>CALL THE STORE</small><p><a href="tel:<%= phoneDigits(settings.phone) %>"><%= settings.phone %></a></p></div></div><% } %>
+        <% if (settings.whatsapp) { %><div class="contact-detail"><span class="contact-detail__icon">✳</span><div><small>WHATSAPP</small><p><a href="<%= whatsappUrl(settings.whatsapp) %>" target="_blank" rel="noopener noreferrer">Chat with us</a></p></div></div><% } %>
+        <% if (settings.email) { %><div class="contact-detail"><span class="contact-detail__icon">@</span><div><small>EMAIL</small><p><a href="mailto:<%= settings.email %>"><%= settings.email %></a></p></div></div><% } %>
+      </div>
+      <div class="contact-direct-actions"><% if (settings.phone && phoneDigits(settings.phone)) { %><a href="tel:<%= phoneDigits(settings.phone) %>" class="button button-gold">Call to Check Availability <span aria-hidden="true">↗</span></a><% } %><% if (settings.whatsapp) { %><a href="<%= whatsappUrl(settings.whatsapp) %>" target="_blank" rel="noopener noreferrer" class="button button-outline">WhatsApp <span aria-hidden="true">↗</span></a><% } %><% if (directionsUrl(settings)) { %><a href="<%= directionsUrl(settings) %>" target="_blank" rel="noopener noreferrer" class="button button-outline">Get Directions <span aria-hidden="true">↗</span></a><% } %></div>
+    </div>
+    <div class="enquiry-panel" id="contact-form"><div class="enquiry-panel__head"><p class="eyebrow eyebrow-gold"><span class="eyebrow-line"></span> SEND AN ENQUIRY</p><h2>What can we help<br><em>you with?</em></h2><p>Leave your details and message. Your enquiry is saved for the store administrator to review.</p></div>
+      <% if (typeof querySent !== 'undefined' && querySent === '1') { %><div class="form-success" role="status"><strong>Enquiry received.</strong><span>Your message has been saved. The store can review it through the admin dashboard.</span></div><% } else if (typeof querySent !== 'undefined' && querySent === '0') { %><div class="form-error" role="status">Your message could not be accepted. Please complete the form and try again.</div><% } %>
+      <%- include('partials/flash') %>
+      <form class="enquiry-form" action="/enquiries" method="post" novalidate data-contact-form>
+        <input type="hidden" name="_csrf" value="<%= csrfToken %>">
+        <div class="honeypot" aria-hidden="true"><label>Website<input type="text" name="website" tabindex="-1" autocomplete="off"></label></div>
+        <div class="form-field"><label for="name">Your name <span>*</span></label><input id="name" name="name" type="text" required minlength="2" maxlength="100" autocomplete="name" placeholder="Full name"></div>
+        <div class="form-row"><div class="form-field"><label for="phone">Phone number <span>*</span></label><input id="phone" name="phone" type="tel" required maxlength="40" autocomplete="tel" placeholder="Your contact number"></div><div class="form-field"><label for="email">Email <small>(optional)</small></label><input id="email" name="email" type="email" maxlength="160" autocomplete="email" placeholder="you@example.com"></div></div>
+        <div class="form-field"><label for="subject">I'm interested in</label><select id="subject" name="subject"><option value="">Choose a topic</option><option>Suiting / Custom Suit</option><option>Raymond Fabrics</option><option>Linen Fabrics</option><option>Custom Shirt</option><option>Tailored Trousers</option><option>Men's Jabbha</option><option>General enquiry</option></select></div>
+        <div class="form-field"><label for="message">Your message <span>*</span></label><textarea id="message" name="message" required minlength="10" maxlength="2000" rows="4" placeholder="Tell us a little about what you're looking for..."></textarea></div>
+        <button class="button button-gold button-full" type="submit">Send Enquiry <span aria-hidden="true">↗</span></button>
+        <p class="form-privacy">Please avoid sharing sensitive personal information. Your details are used to respond to this enquiry.</p>
+      </form>
+    </div>
+  </div></section>
+  <% if (settings.mapEmbedUrl) { %><section class="map-section"><iframe src="<%= settings.mapEmbedUrl %>" title="Map showing the store location" loading="lazy" referrerpolicy="no-referrer-when-downgrade" allowfullscreen></iframe></section><% } else if (settings.address) { %><section class="map-placeholder"><div class="container map-placeholder__inner"><span class="map-placeholder__icon">⌖</span><div><h3>Find us in person</h3><p><%= settings.address %></p></div><a class="button button-outline" href="<%= directionsUrl(settings) %>" target="_blank" rel="noopener noreferrer">Open in Google Maps ↗</a></div></section><% } %>
+</main>
+<%- include('partials/footer') %>

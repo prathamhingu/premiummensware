@@ -1,0 +1,29 @@
+{
+  "name": "premium-menswear-showcase",
+  "version": "3.2.0",
+  "private": true,
+  "description": "Password-protected private preview deployment of the premium menswear showroom.",
+  "main": "server.js",
+  "scripts": {
+    "start": "node server.js",
+    "dev": "node --watch server.js",
+    "admin:create": "node scripts/create-admin.js",
+    "check": "node --check server.js && node --check lib/preview-auth.js && node --check scripts/generate-preview-hash.js && node --check scripts/generate-admin-bootstrap.js && node --check lib/store.js && node --check lib/operations-store.js && node --check lib/file-session-store.js && node --check lib/notifications.js && node --check scripts/create-admin.js && node --check ../frontend/public/js/site.js && node --check ../frontend/public/js/appointments.js && node --check ../frontend/public/js/admin.js && node scripts/check-templates.js",
+    "test": "node --test",
+    "preview:hash": "node scripts/generate-preview-hash.js",
+    "admin:bootstrap-hash": "node scripts/generate-admin-bootstrap.js"
+  },
+  "engines": {
+    "node": ">=20"
+  },
+  "dependencies": {
+    "bcryptjs": "^3.0.3",
+    "dotenv": "^18.0.7",
+    "ejs": "^3.1.10",
+    "express": "^5.3.0",
+    "express-rate-limit": "^8.7.0",
+    "express-session": "^1.19.0",
+    "helmet": "^8.3.0",
+    "multer": "^2.4.0"
+  }
+}

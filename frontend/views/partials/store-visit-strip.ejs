@@ -1,0 +1,21 @@
+<% const publicStatus = typeof storeStatus !== 'undefined' && storeStatus ? storeStatus : { status: 'call_to_confirm', label: 'Call to confirm', note: '', specialHours: '', updatedAt: '', message: 'Today’s live store status has not been confirmed online. Please call before travelling to check opening hours and fabric availability.' }; %>
+<section class="store-visit-strip store-visit-strip--<%= publicStatus.status %>" aria-labelledby="store-visit-strip-title">
+  <div class="container store-visit-strip__inner">
+    <div class="store-visit-strip__copy">
+      <p class="eyebrow"><span class="eyebrow-line"></span> CALL BEFORE YOU TRAVEL</p>
+      <h2 id="store-visit-strip-title"><%= publicStatus.status === 'closed_today' ? 'Planning for another day?' : 'Coming from out of town?' %></h2>
+      <p><%= publicStatus.message %></p>
+      <% if (publicStatus.specialHours) { %><p class="store-visit-strip__hours"><strong>Special hours:</strong> <%= publicStatus.specialHours %></p><% } %>
+      <% if (publicStatus.note) { %><p class="store-visit-strip__note"><%= publicStatus.note %></p><% } %>
+      <% if (publicStatus.updatedAt) { %><p class="store-status-updated">Status updated <%= new Date(publicStatus.updatedAt).toLocaleString('en-IN', { timeZone: 'Asia/Kolkata', dateStyle: 'medium', timeStyle: 'short' }) %> IST</p><% } %>
+    </div>
+    <div class="store-visit-strip__status">
+      <span class="store-status-pill store-status-pill--<%= publicStatus.status %>"><span aria-hidden="true"></span><%= publicStatus.label %></span>
+      <div class="store-visit-strip__hours-block"><small>REGULAR OPENING HOURS</small><p><%= settings.openingHours || 'Please call to confirm opening hours.' %></p></div>
+      <div class="store-visit-strip__actions">
+        <% if (settings.phone && phoneDigits(settings.phone)) { %><a class="button button-gold" href="tel:<%= phoneDigits(settings.phone) %>">Call to Check Availability <span aria-hidden="true">↗</span></a><% } else { %><a class="button button-gold" href="/contact#contact-details">Contact the Store <span aria-hidden="true">↗</span></a><% } %>
+        <% if (directionsUrl(settings)) { %><a class="button button-outline" href="<%= directionsUrl(settings) %>" target="_blank" rel="noopener noreferrer">Get Directions <span aria-hidden="true">↗</span></a><% } %>
+      </div>
+    </div>
+  </div>
+</section>

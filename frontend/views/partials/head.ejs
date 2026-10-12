@@ -1,0 +1,19 @@
+<!doctype html>
+<html lang="en">
+<head>
+  <meta charset="utf-8">
+  <meta name="viewport" content="width=device-width, initial-scale=1">
+  <meta name="theme-color" content="#17251f">
+  <meta name="description" content="<%= (typeof pageDescription !== 'undefined' && pageDescription) || 'Explore premium men’s fabrics, suiting and personalised tailoring. Call ahead to confirm store hours and current fabric availability.' %>">
+  <meta property="og:type" content="website">
+  <meta property="og:title" content="<%= pageTitle || settings.businessName %> | <%= settings.businessName %>">
+  <meta property="og:description" content="<%= (typeof pageDescription !== 'undefined' && pageDescription) || 'Fine fabrics. Thoughtful fit. Men’s tailoring shaped around your style.' %>">
+  <title><%= pageTitle ? `${pageTitle} | ${settings.businessName}` : settings.businessName %></title>
+  <link rel="icon" href="/favicon.svg" type="image/svg+xml">
+  <link rel="stylesheet" href="/css/site.css">
+  <% if (typeof isAdminPage !== 'undefined' && isAdminPage) { %><link rel="stylesheet" href="/css/admin.css"><% } %>
+  <link rel="preconnect" href="https://images.unsplash.com">
+  <link rel="preconnect" href="https://fonts.googleapis.com">
+  <link rel="preconnect" href="https://fonts.gstatic.com" crossorigin>
+</head>
+<body>

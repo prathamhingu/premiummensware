@@ -1,0 +1,17 @@
+node_modules/
+.env
+.env.*
+!.env.example
+!backend/.env.example
+.DS_Store
+npm-debug.log*
+*.log
+.backups/
+coverage/
+backend/data/*.json
+!backend/data/seed-site-data.json
+backend/data/sessions/
+!backend/data/.gitkeep
+frontend/public/uploads/*
+!frontend/public/uploads/.gitkeep
+*.zip

@@ -1,0 +1,21 @@
+<%- include('partials/head', { pageTitle, isAdminPage: true }) %>
+<main class="admin-login-page">
+  <div class="admin-login-brand"><span class="brand-mark" aria-hidden="true">M<span>.</span></span><div><strong><%= settings.businessName || 'YOUR STORE NAME' %></strong><small>CONTENT ADMINISTRATION</small></div></div>
+  <div class="admin-login-card">
+    <a href="/" class="admin-back-link">← Return to public website</a>
+    <p class="eyebrow"><span class="eyebrow-line"></span> RESTRICTED ACCESS</p>
+    <h1>Welcome <em>back.</em></h1>
+    <p class="admin-login-copy">Sign in to manage your website collections, store information, gallery, announcements, testimonials, and enquiries.</p>
+    <% if (flash) { %><div class="flash-message flash-<%= flash.kind === 'error' ? 'error' : 'success' %>" role="status"><%= flash.message %></div><% } %>
+    <form action="/admin/login" method="post" class="admin-login-form">
+      <input type="hidden" name="_csrf" value="<%= csrfToken %>">
+      <div class="form-field"><label for="username">Username</label><input id="username" name="username" type="text" required maxlength="40" autocomplete="username" autofocus></div>
+      <div class="form-field"><label for="password">Password</label><input id="password" name="password" type="password" required maxlength="200" autocomplete="current-password"></div>
+      <button type="submit" class="button button-dark button-full">Sign in <span aria-hidden="true">↗</span></button>
+    </form>
+    <div class="admin-login-help"><strong>First-time setup?</strong><p>In the project folder, run <code>npm run admin:create</code> and follow the prompts. No default password is built into this website.</p></div>
+  </div>
+  <p class="admin-login-footer">Keep the admin account private. This area is for the authorized store administrator only.</p>
+</main>
+</body>
+</html>

@@ -1,0 +1,18 @@
+<!doctype html>
+<html lang="en">
+<head>
+  <meta charset="utf-8"><meta name="viewport" content="width=device-width, initial-scale=1">
+  <title>Job Card <%= order.reference %> | <%= settings.businessName %></title>
+  <link rel="stylesheet" href="/css/job-card.css">
+</head>
+<body>
+  <main class="job-card">
+    <header class="job-header"><div class="monogram">M<span>.</span></div><div><p class="eyebrow">TAILORING WORKROOM</p><h1><%= settings.businessName %></h1><p><%= settings.tagline || "MEN'S FABRICS · TAILORING · SUITING" %></p></div><div class="job-stamp"><small>ORDER REFERENCE</small><strong><%= order.reference %></strong><span><%= orderStatusLabel %></span></div></header>
+    <section class="job-section"><h2>Customer & order details</h2><div class="job-meta-grid"><div><small>CUSTOMER</small><strong><%= order.customerName %></strong></div><div><small>PHONE</small><strong><%= order.phone || 'Not recorded' %></strong></div><div><small>EMAIL</small><strong><%= order.email || 'Not recorded' %></strong></div><div><small>ORDER DATE</small><strong><%= order.orderDate %></strong></div><div><small>EXPECTED COLLECTION</small><strong><%= order.expectedCollectionDate || 'Not set / not confirmed' %></strong></div><div><small>LAST UPDATED</small><strong><%= new Date(order.updatedAt).toLocaleString('en-IN', { dateStyle: 'medium', timeStyle: 'short', timeZone: 'Asia/Kolkata' }) %></strong></div></div></section>
+    <section class="job-section"><h2>Garments & tailoring details</h2><table><thead><tr><th>#</th><th>Garment</th><th>Qty.</th><th>Fabric / reference</th><th>Status</th></tr></thead><tbody><% order.garments.forEach((garment, index) => { %><tr><td><%= index + 1 %></td><td><strong><%= garment.type %></strong><br><%= garment.description || '' %><% if (garment.instructions) { %><p class="garment-instructions"><%= garment.instructions %></p><% } %></td><td><%= garment.quantity %></td><td><%= garment.fabricLabel || 'Not specified' %></td><td><%= garmentStatusLabels[garment.status] || garment.status %></td></tr><% }) %></tbody></table></section>
+    <% if (order.notes) { %><section class="job-section"><h2>Internal order notes</h2><p class="notes"><%= order.notes %></p></section><% } %>
+    <section class="job-section"><h2>Workroom progress record</h2><table class="progress-table"><thead><tr><th>Garment</th><th>Current stage</th><th>Staff initials / note</th></tr></thead><tbody><% order.garments.forEach((garment) => { %><tr><td><%= garment.type %><%= garment.description ? ` · ${garment.description}` : '' %></td><td><%= garmentStatusLabels[garment.status] || garment.status %></td><td class="blank-cell"></td></tr><% }) %></tbody></table></section>
+    <footer class="job-footer"><p>This is an internal tailoring job card. Collection dates are estimates unless explicitly confirmed with the customer. Use the administrator dashboard to update order status.</p><button type="button" onclick="window.print()">Print job card</button></footer>
+  </main>
+</body>
+</html>

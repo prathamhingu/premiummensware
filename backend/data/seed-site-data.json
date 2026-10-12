@@ -1,0 +1,75 @@
+{
+  "version": 1,
+  "settings": {
+    "businessName": "Hingu Cloth Store",
+    "tagline": "MEN'S FABRICS · TAILORING · SUITING",
+    "intro": "A considered destination for men’s fabrics, tailored essentials, and suiting for life’s important moments.",
+    "heroHeadline": "Elegance, tailored to you.",
+    "heroSubheadline": "Discover fine fabrics, thoughtful fit, and menswear shaped around your personal style.",
+    "heroImage": "",
+    "heroImageUrl": "https://images.unsplash.com/photo-1617137968427-85924c800a22?auto=format&fit=crop&w=2200&q=85",
+    "phone": "7862078404",
+    "whatsapp": "917862078404",
+    "email": "",
+    "address": "",
+    "openingHours": "",
+    "mapUrl": "",
+    "mapEmbedUrl": "",
+    "instagramUrl": "",
+    "facebookUrl": "",
+    "announcementBar": "",
+    "announcementBarActive": false
+  },
+  "categories": [
+    {
+      "id": "cat-suiting",
+      "name": "Suiting Fabrics",
+      "slug": "suiting-fabrics",
+      "description": "Explore suiting options for business, weddings, celebrations, and formal occasions. Visit the store to review current fabrics and discuss tailoring.",
+      "image": "",
+      "imageUrl": "https://images.unsplash.com/photo-1592878904946-b3cd8ae243d0?auto=format&fit=crop&w=1400&q=85",
+      "sortOrder": 1
+    },
+    {
+      "id": "cat-raymond",
+      "name": "Raymond Fabrics",
+      "slug": "raymond-fabrics",
+      "description": "Discover the Raymond fabrics available at our store. Current designs and availability can be confirmed in person.",
+      "image": "",
+      "imageUrl": "https://images.unsplash.com/photo-1551488831-00ddcb6c6bd3?auto=format&fit=crop&w=1200&q=80",
+      "sortOrder": 2
+    },
+    {
+      "id": "cat-linen",
+      "name": "Linen Fabrics",
+      "slug": "linen-fabrics",
+      "description": "A relaxed fabric direction for breathable, understated menswear. Visit us to explore the linen options currently available.",
+      "image": "",
+      "imageUrl": "https://images.unsplash.com/photo-1598033129183-c4f50c736f10?auto=format&fit=crop&w=1200&q=80",
+      "sortOrder": 3
+    },
+    {
+      "id": "cat-shirting",
+      "name": "Shirting Fabrics",
+      "slug": "shirting-fabrics",
+      "description": "Explore fabric options for shirts suited to your preferred style, occasion, and fit.",
+      "image": "",
+      "imageUrl": "https://images.unsplash.com/photo-1603252109303-2751441dd157?auto=format&fit=crop&w=1200&q=80",
+      "sortOrder": 4
+    },
+    {
+      "id": "cat-trouser",
+      "name": "Trouser Fabrics",
+      "slug": "trouser-fabrics",
+      "description": "Find fabric options for tailored trousers and coordinated formalwear. Visit the store to check current choices.",
+      "image": "",
+      "imageUrl": "https://images.unsplash.com/photo-1473966968600-fa801b869a1a?auto=format&fit=crop&w=1200&q=80",
+      "sortOrder": 5
+    }
+  ],
+  "collections": [],
+  "gallery": [],
+  "announcements": [],
+  "testimonials": [],
+  "enquiries": []
+}

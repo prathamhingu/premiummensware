@@ -1,0 +1,22 @@
+<% if (settings.announcementBarActive && settings.announcementBar) { %>
+  <div class="announcement-strip"><span><%= settings.announcementBar %></span></div>
+<% } %>
+<header class="site-header">
+  <div class="container nav-wrap">
+    <a class="brand" href="/" aria-label="<%= settings.businessName %> home">
+      <span class="brand-mark" aria-hidden="true">M<span>.</span></span>
+      <span class="brand-copy"><strong><%= settings.businessName %></strong><small><%= settings.tagline || "MEN'S FABRICS · TAILORING · SUITING" %></small></span>
+    </a>
+    <button class="menu-toggle" type="button" aria-label="Open navigation" aria-expanded="false" data-menu-toggle><span></span><span></span></button>
+    <nav class="main-nav" data-nav aria-label="Main navigation">
+      <a class="<%= activePage === 'home' ? 'is-active' : '' %>" href="/">Home</a>
+      <a class="<%= activePage === 'about' ? 'is-active' : '' %>" href="/about">Our Story</a>
+      <a class="<%= activePage === 'collections' ? 'is-active' : '' %>" href="/collections">Fabrics</a>
+      <a class="<%= activePage === 'tailoring' ? 'is-active' : '' %>" href="/tailoring">Tailoring</a>
+      <a class="<%= activePage === 'suiting' ? 'is-active' : '' %>" href="/suiting">Suiting</a>
+      <a class="<%= activePage === 'gallery' ? 'is-active' : '' %>" href="/gallery">Gallery</a>
+      <% if (settings.phone && phoneDigits(settings.phone)) { %><a class="nav-call" href="tel:<%= phoneDigits(settings.phone) %>" aria-label="Call <%= settings.businessName %> to check store availability"><span class="nav-call__icon" aria-hidden="true">☎</span><span>Call the Store</span></a><% } %>
+      <a class="nav-visit <%= activePage === 'contact' ? 'is-active' : '' %>" href="/contact">Visit the Store <span aria-hidden="true">↗</span></a>
+    </nav>
+  </div>
+</header>

@@ -1,0 +1,90 @@
+<%- include('partials/head') %>
+<%- include('partials/nav', { activePage }) %>
+<%- include('partials/flash') %>
+<main>
+  <section class="hero">
+    <img class="hero__image" src="<%= settings.heroImage || settings.heroImageUrl || stockImages.hero %>" alt="Editorial photograph of a man wearing tailored menswear" fetchpriority="high">
+    <div class="hero__shade"></div>
+    <div class="container hero__content">
+      <p class="eyebrow eyebrow-gold"><span class="eyebrow-line"></span> MEN'S FABRICS · FIT · FINISH</p>
+      <h1><%= settings.heroHeadline || 'Elegance, tailored to you.' %></h1>
+      <p class="hero__lede"><%= settings.heroSubheadline || 'Discover fine fabrics, thoughtful fit, and menswear shaped around your personal style.' %></p>
+      <div class="hero__actions"><% if (settings.phone && phoneDigits(settings.phone)) { %><a class="button button-gold" href="tel:<%= phoneDigits(settings.phone) %>">Call to Check Availability <span aria-hidden="true">↗</span></a><% } else { %><a class="button button-gold" href="/contact">Contact the Store <span aria-hidden="true">↗</span></a><% } %><a class="button button-ghost" href="/collections">Explore Collections</a><% if (directionsUrl(settings)) { %><a class="hero-directions-link" href="<%= directionsUrl(settings) %>" target="_blank" rel="noopener noreferrer">Get directions to the store ↗</a><% } %></div>
+      <div class="hero__note"><span class="hero__note-rule"></span><span>Fine fabrics. Personal attention. Your kind of fit.</span></div>
+    </div>
+    <div class="hero__vertical-label">CRAFTED AROUND YOU · ESTABLISH YOUR OWN STYLE</div>
+  </section>
+
+  <% if (announcements && announcements.length) { %>
+    <section class="notice-stack container" aria-label="Store announcements">
+      <% announcements.slice(0, 2).forEach((announcement) => { %>
+        <div class="notice-card"><span class="notice-card__dot"></span><div><strong><%= announcement.title %></strong><% if (announcement.body) { %><p><%= announcement.body %></p><% } %></div></div>
+      <% }) %>
+    </section>
+  <% } %>
+
+  <section class="section section-intro">
+    <div class="container intro-grid">
+      <div><p class="eyebrow"><span class="eyebrow-line"></span> MADE FOR MEN, MADE PERSONAL</p><h2>Style begins long before<br><em>the first stitch.</em></h2></div>
+      <div class="intro-copy"><p class="lead-copy">The right fabric changes how a garment feels. The right fit changes how you carry it.</p><p>Explore fabrics for everyday essentials and special occasions, then work with us in-store to discuss the details that make a piece feel like yours.</p><a class="text-link" href="/about">Get to know us <span aria-hidden="true">↗</span></a></div>
+    </div>
+  </section>
+
+  <section class="section section-collections" id="collections">
+    <div class="container">
+      <div class="section-heading section-heading-row"><div><p class="eyebrow"><span class="eyebrow-line"></span> THE FABRIC EDIT</p><h2>Good fabric. <em>Better possibilities.</em></h2></div><a class="text-link desktop-only" href="/collections">View all collections <span aria-hidden="true">↗</span></a></div>
+      <div class="category-grid">
+        <% categories.slice(0, 5).forEach((category, index) => { %>
+          <a class="category-card category-card-<%= index + 1 %>" href="/collections?category=<%= encodeURIComponent(category.id) %>">
+            <div class="category-card__image-wrap"><img src="<%= imageFor(category) || stockImages.detail %>" alt="Editorial fabric and menswear inspiration for <%= category.name %>" loading="lazy"><span class="image-index">0<%= index + 1 %></span></div>
+            <div class="category-card__info"><div><h3><%= category.name %></h3><p><%= category.description %></p></div><span class="round-arrow" aria-hidden="true">↗</span></div>
+          </a>
+        <% }) %>
+      </div>
+      <p class="image-disclaimer">Images are editorial inspiration, not a representation of current in-store stock. Actual fabrics and designs vary.</p>
+      <div class="mobile-center mobile-only"><a class="button button-outline" href="/collections">View all collections</a></div>
+    </div>
+  </section>
+
+  <section class="suiting-feature">
+    <div class="suiting-feature__image"><img src="<%= stockImages.suiting %>" alt="Editorial photograph illustrating formal menswear and suiting" loading="lazy"><span class="image-caption">SUITING · A MORE PERSONAL APPROACH</span></div>
+    <div class="suiting-feature__content"><p class="eyebrow eyebrow-gold"><span class="eyebrow-line"></span> OUR SPECIALITY</p><h2>A suit should feel<br><em>like it belongs to you.</em></h2><p>From choosing a fabric to discussing the cut, details, and fit, a tailored suit begins with a conversation. Visit the store to explore available suiting fabrics and talk through what you have in mind.</p><div class="feature-points"><div><span>01</span><p>Choose your fabric</p></div><div><span>02</span><p>Discuss the details</p></div><div><span>03</span><p>Make the fit personal</p></div></div><a class="button button-gold" href="/suiting">Find Your Perfect Suit <span aria-hidden="true">↗</span></a></div>
+  </section>
+
+  <section class="section section-services">
+    <div class="container">
+      <div class="section-heading"><p class="eyebrow"><span class="eyebrow-line"></span> THE CRAFT OF TAILORING</p><h2>Consider the occasion.<br><em>Then make it yours.</em></h2><p class="section-subtitle">Thoughtful tailoring is about the way a garment comes together: fabric, form, and the details you choose.</p></div>
+      <div class="service-grid">
+        <a href="/tailoring#shirts" class="service-card"><span class="service-number">01 / SHIRTS</span><img src="<%= stockImages.shirting %>" alt="Editorial shirt and fabric inspiration" loading="lazy"><div class="service-card__body"><h3>Custom Shirts</h3><p>Discuss cloth, collar, cuffs, and the fit you prefer.</p><span class="text-link">Explore service <span aria-hidden="true">↗</span></span></div></a>
+        <a href="/tailoring#trousers" class="service-card"><span class="service-number">02 / TROUSERS</span><img src="<%= stockImages.trousers %>" alt="Editorial trouser styling inspiration" loading="lazy"><div class="service-card__body"><h3>Tailored Trousers</h3><p>Build a considered wardrobe staple around your needs.</p><span class="text-link">Explore service <span aria-hidden="true">↗</span></span></div></a>
+        <a href="/tailoring#jabbha" class="service-card"><span class="service-number">03 / TRADITIONAL</span><img src="<%= stockImages.detail %>" alt="Editorial menswear fabric detail" loading="lazy"><div class="service-card__body"><h3>Men's Jabbha</h3><p>Discuss traditional styles, fabric choices, and finishing.</p><span class="text-link">Explore service <span aria-hidden="true">↗</span></span></div></a>
+        <a href="/suiting" class="service-card"><span class="service-number">04 / FORMALWEAR</span><img src="<%= stockImages.tailoring %>" alt="Editorial formalwear and tailoring inspiration" loading="lazy"><div class="service-card__body"><h3>Suits & Suiting</h3><p>Explore formalwear for celebrations, work, and important days.</p><span class="text-link">Explore service <span aria-hidden="true">↗</span></span></div></a>
+      </div>
+    </div>
+  </section>
+
+  <section class="section section-why">
+    <div class="container">
+      <div class="section-heading"><p class="eyebrow"><span class="eyebrow-line"></span> WHY VISIT US</p><h2>Some choices are better<br><em>made in person.</em></h2><p class="section-subtitle">A visit lets you see colours and textures up close, ask questions, and discuss how a garment should fit your needs.</p></div>
+      <div class="why-grid">
+        <article class="why-card"><span>01</span><div><h3>Explore the fabric</h3><p>Compare the textures and colours currently available at the store.</p></div></article>
+        <article class="why-card"><span>02</span><div><h3>Make it personal</h3><p>Talk through your style preferences and the occasion you are dressing for.</p></div></article>
+        <article class="why-card"><span>03</span><div><h3>Discuss the fit</h3><p>Ask about measurements, silhouette, and tailoring options before confirming.</p></div></article>
+        <article class="why-card"><span>04</span><div><h3>Know the details</h3><p>Confirm price, timing, and order details directly with the store.</p></div></article>
+      </div>
+    </div>
+  </section>
+
+  <section class="craft-band"><div class="container craft-band__inner"><p class="eyebrow eyebrow-gold"><span class="eyebrow-line"></span> THE DETAILS MATTER</p><h2>Not just what you wear.<br><em>How it comes together.</em></h2><p>Find the fabric. Talk through the fit. Make the finishing touches count.</p><a class="button button-ivory" href="/contact">Start with a visit <span aria-hidden="true">↗</span></a><div class="craft-band__seal" aria-hidden="true"><span>FABRIC</span><b>×</b><span>FIT</span><b>×</b><span>FINISH</span></div></div></section>
+
+  <% if (testimonials && testimonials.length) { %>
+    <section class="section section-testimonials"><div class="container testimonial-layout"><div><p class="eyebrow"><span class="eyebrow-line"></span> WORD OF MOUTH</p><h2>Good service is<br><em>remembered.</em></h2><p class="muted-copy">Feedback shared by customers who have permitted us to publish their words.</p></div><div class="testimonial-stack"><% testimonials.slice(0, 3).forEach((item) => { %><figure class="testimonial-card"><span class="testimonial-quote-mark">“</span><blockquote><%= item.quote %></blockquote><figcaption><strong><%= item.customerName %></strong><% if (item.context) { %><span><%= item.context %></span><% } %></figcaption></figure><% }) %></div></div></section>
+  <% } %>
+
+  <% if (galleryHighlights && galleryHighlights.length) { %>
+    <section class="section section-gallery-preview"><div class="container"><div class="section-heading section-heading-row"><div><p class="eyebrow"><span class="eyebrow-line"></span> FROM THE GALLERY</p><h2>A closer look at <em>the details.</em></h2></div><a href="/gallery" class="text-link desktop-only">Visit the gallery <span aria-hidden="true">↗</span></a></div><div class="gallery-preview-grid"><% galleryHighlights.forEach((item) => { %><a href="/gallery" class="gallery-preview-item"><img src="<%= imageFor(item) %>" alt="<%= item.alt || item.title %>" loading="lazy"><span><%= item.title %></span></a><% }) %></div><p class="image-disclaimer">Gallery images are managed by the store administrator.</p></div></section>
+  <% } %>
+
+  <%- include('partials/store-visit-strip') %>
+</main>
+<%- include('partials/footer') %>

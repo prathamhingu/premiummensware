@@ -1,0 +1,4 @@
+<%- include('partials/head') %>
+<%- include('partials/nav', { activePage: '' }) %>
+<main class="error-page"><div class="container error-page__inner"><p class="eyebrow"><span class="eyebrow-line"></span> ERROR <%= statusCode || 500 %></p><h1>That wasn't<br><em>part of the plan.</em></h1><p><%= message || 'Something went wrong while processing your request.' %></p><a href="/" class="button button-dark">Back to Home <span aria-hidden="true">↗</span></a></div></main>
+<%- include('partials/footer') %>

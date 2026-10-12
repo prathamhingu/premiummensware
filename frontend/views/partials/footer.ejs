@@ -1,0 +1,32 @@
+<footer class="site-footer">
+  <div class="container footer-top">
+    <div class="footer-brand-block">
+      <a class="brand brand-light" href="/">
+        <span class="brand-mark" aria-hidden="true">M<span>.</span></span>
+        <span class="brand-copy"><strong><%= settings.businessName %></strong><small><%= settings.tagline || "MEN'S FABRICS · TAILORING · SUITING" %></small></span>
+      </a>
+      <p><%= settings.intro || 'Premium fabrics, personal service, and considered menswear.' %></p>
+    </div>
+    <div class="footer-column"><h3>Explore</h3><a href="/about">Our Story</a><a href="/collections">Fabrics & Collections</a><a href="/tailoring">Tailoring Services</a><a href="/suiting">Suiting</a><a href="/gallery">Gallery</a></div>
+    <div class="footer-column"><h3>Visit Us</h3>
+      <% if (settings.address) { %><p><%= settings.address %></p><% } else { %><p>Store address will be added soon.</p><% } %>
+      <% if (settings.phone) { %><a href="tel:<%= phoneDigits(settings.phone) %>"><%= settings.phone %></a><% } %>
+      <% if (settings.email) { %><a href="mailto:<%= settings.email %>"><%= settings.email %></a><% } %>
+      <% if (settings.openingHours) { %><p class="hours-copy"><%= settings.openingHours %></p><% } %>
+      <% if (directionsUrl(settings)) { %><a href="<%= directionsUrl(settings) %>" target="_blank" rel="noopener noreferrer">Get Directions ↗</a><% } %>
+      <% if (settings.instagramUrl || settings.facebookUrl) { %><p class="social-links"><% if (settings.instagramUrl) { %><a href="<%= settings.instagramUrl %>" target="_blank" rel="noopener noreferrer">Instagram ↗</a><% } %><% if (settings.facebookUrl) { %><a href="<%= settings.facebookUrl %>" target="_blank" rel="noopener noreferrer">Facebook ↗</a><% } %></p><% } %>
+    </div>
+    <div class="footer-cta"><p class="eyebrow eyebrow-gold">YOUR NEXT GREAT FIT</p><h3>Make it personal.</h3><p>Come by, feel the fabrics, and talk through the details.</p><a class="text-link text-link-light" href="/contact">Plan your visit <span aria-hidden="true">↗</span></a></div>
+  </div>
+  <div class="container footer-bottom"><span>© <%= new Date().getFullYear() %> <%= settings.businessName %>. All rights reserved.</span><span class="footer-note">Editorial images are illustrative; gallery uploads are added by the store administrator.</span><a href="/admin/login">Admin</a><% if (previewGateEnabled && previewAuthorized) { %><form class="preview-exit-form" method="post" action="/_preview/logout"><input type="hidden" name="_csrf" value="<%= csrfToken %>"><button type="submit">End Preview Session</button></form><% } %></div>
+</footer>
+<% if ((settings.phone && phoneDigits(settings.phone)) || directionsUrl(settings)) { %>
+  <nav class="mobile-contact-bar" aria-label="Quick store contact">
+    <% if (settings.phone && phoneDigits(settings.phone)) { %><a class="mobile-contact-bar__call" href="tel:<%= phoneDigits(settings.phone) %>"><span aria-hidden="true">☎</span><span>Call</span></a><% } %>
+    <% if (directionsUrl(settings)) { %><a class="mobile-contact-bar__directions" href="<%= directionsUrl(settings) %>" target="_blank" rel="noopener noreferrer"><span aria-hidden="true">⌖</span><span>Directions</span></a><% } %>
+    <% if (settings.whatsapp && whatsappUrl(settings.whatsapp)) { %><a class="mobile-contact-bar__whatsapp" href="<%= whatsappUrl(settings.whatsapp) %>" target="_blank" rel="noopener noreferrer"><span aria-hidden="true">✳</span><span>WhatsApp</span></a><% } %>
+  </nav>
+<% } %>
+<script src="/js/site.js" defer></script>
+</body>
+</html>

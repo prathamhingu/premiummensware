@@ -1,0 +1,55 @@
+<%- include('partials/head') %>
+<%- include('partials/nav', { activePage }) %>
+<main>
+  <section class="page-hero page-hero-dark appointment-hero">
+    <div class="container page-hero__inner">
+      <p class="eyebrow eyebrow-gold"><span class="eyebrow-line"></span> A PERSONAL VISIT</p>
+      <h1>Make time for<br><em>the right fit.</em></h1>
+      <p>Choose a service, select a date, and view appointment slots based on the store's configured availability. Your request is confirmed only after the store accepts it.</p>
+      <div class="breadcrumbs breadcrumbs-light"><a href="/">Home</a><span>/</span><span>Appointments</span></div>
+    </div><div class="page-hero__shape" aria-hidden="true">M.</div>
+  </section>
+  <section class="section appointment-section" id="appointment-form">
+    <div class="container appointment-layout">
+      <aside class="appointment-intro">
+        <p class="eyebrow"><span class="eyebrow-line"></span> PLAN YOUR VISIT</p>
+        <h2>A thoughtful<br><em>consultation starts here.</em></h2>
+        <p>Use this form to request a visit for suiting or another tailoring service. The calendar reflects the hours configured by the store, not a promise that a request has already been accepted.</p>
+        <div class="appointment-promises">
+          <div><span>01</span><p><strong>Choose a service</strong><small>Tell us what you would like to discuss.</small></p></div>
+          <div><span>02</span><p><strong>Select a live slot</strong><small>Unavailable times are not offered.</small></p></div>
+          <div><span>03</span><p><strong>Wait for confirmation</strong><small>The store reviews your request and confirms the visit.</small></p></div>
+        </div>
+        <% if (settings.phone) { %><a class="text-link" href="tel:<%= phoneDigits(settings.phone) %>">Prefer to call? <%= settings.phone %> ↗</a><% } %>
+      </aside>
+      <div class="appointment-card">
+        <div class="appointment-card__heading"><p class="eyebrow eyebrow-gold"><span class="eyebrow-line"></span> APPOINTMENT REQUEST</p><h2>Arrange a visit.</h2><p>Fields marked with * are required.</p></div>
+        <%- include('partials/flash') %>
+        <form action="/appointments" method="post" class="appointment-form" data-appointment-form data-availability-url="/api/appointment-availability" data-max-advance-days="<%= maxAdvanceDays %>">
+          <input type="hidden" name="_csrf" value="<%= csrfToken %>">
+          <div class="appointment-honeypot" aria-hidden="true"><label>Leave this field empty<input type="text" name="website" tabindex="-1" autocomplete="off"></label></div>
+          <div class="appointment-form-section"><span class="appointment-form-number">01</span><div class="appointment-form-section__body"><h3>Your consultation</h3>
+            <div class="form-field"><label for="appointment-service">What would you like to discuss? <span>*</span></label><select id="appointment-service" name="service" required><% services.forEach((service) => { %><option value="<%= service %>" <%= (typeof requestService !== 'undefined' ? requestService : '') === service || (!requestService && service === 'Suiting consultation') ? 'selected' : '' %>><%= service %></option><% }) %></select></div>
+            <div class="form-row"><div class="form-field"><label for="appointment-occasion">Occasion <small>(optional)</small></label><select id="appointment-occasion" name="occasion"><option value="">Not specified</option><% occasions.forEach((occasion) => { %><option value="<%= occasion %>" <%= prefill.occasion === occasion ? 'selected' : '' %>><%= occasion %></option><% }) %></select></div><div class="form-field"><label for="appointment-style">Style direction <small>(optional)</small></label><select id="appointment-style" name="style"><option value="">Not specified</option><% styles.forEach((style) => { %><option value="<%= style %>" <%= prefill.style === style ? 'selected' : '' %>><%= style %></option><% }) %></select></div></div>
+            <% if (prefill.fabricLabel) { %><div class="appointment-preference"><small>FABRIC PREFERENCE FROM YOUR SUITING CONSULTATION</small><strong><%= prefill.fabricLabel %></strong><a href="/suiting#suiting-consultation">Change selection on the Suiting page ↗</a><input type="hidden" name="fabricChoice" value="<%= prefill.fabricChoice %>"></div><% } else { %><input type="hidden" name="fabricChoice" value=""><% } %>
+          </div></div>
+          <div class="appointment-form-section"><span class="appointment-form-number">02</span><div class="appointment-form-section__body"><h3>Select a date and time</h3><p class="appointment-small-copy">All times are shown in India Standard Time (Asia/Kolkata).</p>
+            <div class="form-row"><div class="form-field"><label for="appointment-date">Preferred date <span>*</span></label><input id="appointment-date" type="date" name="date" min="<%= todayKey %>" max="<%= maxDateKey %>" value="<%= requestedDate || '' %>" required data-availability-date></div><div class="form-field"><label for="appointment-time">Available time <span>*</span></label><select id="appointment-time" name="time" required disabled data-availability-time><option value="">Choose a date first</option></select></div></div>
+            <p class="appointment-availability-message" data-availability-message role="status" aria-live="polite"><%= scheduleConfigured ? 'Choose a date to view available times.' : 'Appointment hours have not been configured by the store yet. Please call or message the store to arrange a visit.' %></p>
+          </div></div>
+          <div class="appointment-form-section"><span class="appointment-form-number">03</span><div class="appointment-form-section__body"><h3>Your contact details</h3>
+            <div class="form-field"><label for="appointment-name">Full name <span>*</span></label><input id="appointment-name" name="name" type="text" required minlength="2" maxlength="100" autocomplete="name" value="<%= requestName || '' %>"></div>
+            <div class="form-row"><div class="form-field"><label for="appointment-phone">Phone number <span>*</span></label><input id="appointment-phone" name="phone" type="tel" required minlength="7" maxlength="40" autocomplete="tel" pattern="[0-9+(). -]{7,40}" title="Enter at least 7 digits. Spaces and common phone punctuation are accepted." value="<%= requestPhone || '' %>"></div><div class="form-field"><label for="appointment-email">Email <small>(optional)</small></label><input id="appointment-email" name="email" type="email" maxlength="160" autocomplete="email" value="<%= requestEmail || '' %>"></div></div>
+            <div class="form-field"><label for="appointment-contact-method">Preferred contact method</label><select id="appointment-contact-method" name="contactMethod"><option value="phone">Phone call</option><option value="whatsapp">WhatsApp</option><option value="email">Email</option></select></div>
+            <div class="form-field"><label for="appointment-notes">Additional requirements <small>(optional)</small></label><textarea id="appointment-notes" name="notes" rows="3" maxlength="1200" placeholder="Share any useful context for the store. Please do not include sensitive personal information."><%= requestNotes || '' %></textarea></div>
+            <label class="appointment-acknowledgement"><input type="checkbox" name="acknowledgement" value="yes" required><span>I understand this is an appointment request. My selected time is not confirmed until the store accepts the request.</span></label>
+            <button class="button button-gold button-full appointment-submit" type="submit">Submit Appointment Request <span aria-hidden="true">↗</span></button>
+            <p class="form-privacy">Your details are stored so the store can review and respond to your request. The form does not create a tailoring order or reserve fabric.</p>
+          </div></div>
+        </form>
+      </div>
+    </div>
+  </section>
+</main>
+<%- include('partials/footer') %>
+<script src="/js/appointments.js" defer></script>
